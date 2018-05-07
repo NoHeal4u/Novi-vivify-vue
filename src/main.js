@@ -8,6 +8,12 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 
+// Vue.mixin({
+// 	created(){
+// 		console.log('Global mixin')
+// 	}
+// })
+
 const routes = [
   { path: '/', redirect: '/contacts' },
   { path: '/contacts', component: Contacts, name: 'contacts' },
