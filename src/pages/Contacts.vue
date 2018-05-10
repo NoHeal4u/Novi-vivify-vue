@@ -1,76 +1,75 @@
 <template>
-  <div class="container mt-4">
-    <div class="row">
-      <div class="col">
-        <ContactList :contacts="contacts" />
-      </div>
-      <div class="col-8">
-        <ContactDetails :contact="routeContact" />
-      </div>
-    </div>
+  <div>
+  Contacts
+
+<div class="card" style="width: 18rem;" v-for="(contact, index) in contacts">
+ 
+  <div class="card-body">
+    <h5 class="card-title">First Name:{{ contact.first_name }}</h5>
+    <p class="card-text">Last Name:{{ contact.last_name }}</p>
+    <p class="card-text">Email:{{ contact.email }}</p>
+    <p class="card-text">Number:{{ contact.number }}</p>
+    <p class="card-text">idTEst:{{ contact.id }}</p>
+    <button v-on:click="deleteContact(contact.id , index)" >DELETE CONTACT</button>
+    <button v-on:click="editContact(contact.id)" >EDIT CONTACT</button>
+    
+    
+  </div>
+</div>
+
+  
+
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 
-import ContactList from '../components/ContactList.vue'
-import ContactDetails from '../components/ContactDetails.vue'
 
-export default {
-  components: {
-    ContactList,
-    ContactDetails
-  },
+import { contacts } from '../services/ContactsService'
 
-  created(){
-    this.getContact()
-  },
+  export default {
 
-  data() {
-    return {
-      // contacts: [
-      //   { id: 1, name: 'John Doe', email: 'johndoe@example.com', number: '555-12345' },
-      //   { id: 2, name: 'Pera Peric', email: 'peraperic@example.com', number: '555-54321' },
-      //   { id: 3, name: 'Nenad Vujicic', email: 'nenad.v@example.com', number: '555-67890' }
-      // ]
-
-      contacts: []
-    }
-  },
-  computed: {
-    routeContact() {
-      return this.contacts.find(contact => contact.id == this.$route.params.id)
-    }
-  },
-
-  methods : {
-    getContact(){
-      axios.get('https://api.randomuser.me/')
-        .then((response) =>{
-          let contact = {}
-          contact.id = response.data.results[0].id.name
-          contact.name = response.data.results[0].name.first
-          contact.email = response.data.results[0].email
-          contact.number = response.data.results[0].cell
-
-          this.contacts.push(contact)
-        })
-
-        .catch((error) => {
+    created(){
+        contacts.getAll()
+        .then((response)=>{
+          this.contacts = response.data
+          console.log(this.contacts)
+        }).catch((error)=>{
           console.log(error)
         })
+      },
 
-        axios.defaults.baseURL = 'http://jsonplaceholder.typicode.com/'
+    data() {
 
-        axios.post('posts',{
-          body: {firstName: 'Aleksandra'}
-        }).then((response) =>{
-          console.log('Success', response)
-        }).catch((error) => {
-          console.log('Error', error)
-        })
+      return {
+
+        contacts: []
+        
+        
+      }
+    },
+
+    methods : {
+
+    deleteContact(id, index) {
+
+      contacts.delete(id)
+      .then((response) =>{
+        this.contacts.splice(index, 1)
+      })
+    },
+
+    editContact(id){
+      this.$router.push('/edit-contact')  
     }
+
   }
-}
+
+    
+
+  }
 </script>
+  
+<style>
+
+</style>
