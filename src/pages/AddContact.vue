@@ -65,24 +65,43 @@ export default {
 
 },
 	methods : {
-  	addContact(){
-  		contacts.add(this.newContact)
-    		.then((response)=>{
-    			this.$router.push('/contacts')
-    			console.log(this.contacts)
-    		}).catch((error)=>{
-    			console.log(error)
-    		})
+  // 	addContact(){
+  // 		contacts.add(this.newContact)
+  //   		.then((response)=>{
+  //   			this.$router.push('/contacts')
+  //   			console.log(this.contacts)
+  //   		}).catch((error)=>{
+  //   			console.log(error)
+  //   		})
 
-  		}
+  // 		}
 
- 	},
+ 	// },
+
+
+  addContact(){
+          if(this.$route.params.id)
+          {
+            contacts.edit(this.$route.params.id, this.newContact)
+           this.$router.push('/contacts')
+          }
+          else
+          {
+            contacts.add(this.newContact)
+            this.$router.push('/contacts')
+          }
+      }
+    },
 
  	created(){
- 		if(this.$route.params.id) {
- 			// Povuces sa servera kontakt za tim id-jem
- 				// .then .... this.newContact = response.data
- 		}
+ 		 if(this.$route.params.id){
+        contacts.get(this.$route.params.id)
+        .then((response) => {
+            this.newContact=response.data
+        }).catch((error) => {
+            console.log(error)
+        })
+      }
  	}
 
 

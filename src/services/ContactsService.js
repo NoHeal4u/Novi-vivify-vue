@@ -21,7 +21,11 @@ export default class Contacts {
 	}
 
 	edit (id, contact){
-		return axios.put(`contacts/${id}`,car)
+		return axios.put(`contacts/${id}`,contact)
+	}
+
+	get(id) {
+		return axios.get(`contacts/${id}`)
 	}
 	
 }

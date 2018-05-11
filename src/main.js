@@ -19,7 +19,7 @@ const routes = [
   { path: '/contacts', component: Contacts, name: 'contacts' },
   { path: '/contacts/:id', component: Contacts, name: 'contact-details' },
   { path: '/add-contact', component: AddContact },
-  {	path: '/edit-contact/:id',component: AddContact}
+  {	path: '/edit-contact/:id',component: AddContact, name: 'edit'}
 ]
 
 const router = new VueRouter({

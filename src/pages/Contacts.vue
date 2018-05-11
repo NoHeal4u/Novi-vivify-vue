@@ -4,14 +4,14 @@
 
 <div class="card" style="width: 18rem;" v-for="(contact, index) in contacts">
  
-  <div class="card-body">
+  <div class="card bg-secondary text-white">
     <h5 class="card-title">First Name:{{ contact.first_name }}</h5>
     <p class="card-text">Last Name:{{ contact.last_name }}</p>
     <p class="card-text">Email:{{ contact.email }}</p>
     <p class="card-text">Number:{{ contact.number }}</p>
     <p class="card-text">idTEst:{{ contact.id }}</p>
-    <button v-on:click="deleteContact(contact.id , index)" >DELETE CONTACT</button>
-    <button v-on:click="editContact(contact.id)" >EDIT CONTACT</button>
+    <button v-on:click="deleteContact(contact.id , index)" class="btn btn-primary">DELETE CONTACT</button>
+   <router-link class="btn btn-primary" :to="{ name: 'edit', params: { id: contact.id } }">EDIT CONTACT</router-link>
     
     
   </div>
